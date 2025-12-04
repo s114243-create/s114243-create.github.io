@@ -8,19 +8,15 @@
 /* 基本版面 */
 html,body{height:100%;margin:0;font-family:system-ui, 'Noto Sans TC', sans-serif;background:linear-gradient(180deg,#f8fafc,#eef2ff);}
 
-
 /* 隱藏的 checkbox（用來記錄點擊狀態） */
 #toggle{position:absolute;left:-9999px;}
-
 
 /* 全頁的 label，點擊任何位置都會切換 checkbox（因此達到「點一下出現/隱藏狸貓」的效果） */
 label.fullpage{
 position:fixed;inset:0;cursor:pointer;display:block;}
 
-
 /* 提示字樣 */
 .hint{position:fixed;left:12px;top:12px;background:rgba(255,255,255,0.8);backdrop-filter:blur(6px);padding:8px 12px;border-radius:10px;box-shadow:0 4px 14px rgba(16,24,40,0.06);z-index:40}
-
 
 /* 狸貓圖片樣式（預設隱藏） */
 .tanuki{
@@ -28,10 +24,8 @@ position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);
 max-width:40vmin;max-height:40vmin;pointer-events:none;opacity:0;transition:transform .24s ease,opacity .24s ease;z-index:30;
 filter:drop-shadow(0 8px 18px rgba(16,24,40,0.12));border-radius:10px;}
 
-
 /* 當 checkbox 被切換為 checked 時，顯示狸貓 */
 #toggle:checked ~ .tanuki{opacity:1;transform:translate(-50%,-55%) scale(1);}
-
 
 /* 小螢幕調整 */
 @media (max-width:480px){
@@ -44,19 +38,14 @@ filter:drop-shadow(0 8px 18px rgba(16,24,40,0.12));border-radius:10px;}
 <!-- 使用者說明（不佔互動區） -->
 <div class="hint">左鍵點一下任意位置 → 顯示 / 隱藏狸貓（只用 HTML + CSS）</div>
 
-
 <!-- 隱藏 Checkbox：這是狀態切換的核心（不會顯示在畫面） -->
 <input id="toggle" type="checkbox" />
-
 
 <!-- 全螢幕 label：點擊任何地方都會切換上面的 checkbox -->
 <label for="toggle" class="fullpage" aria-hidden="true" title="點一下顯示／隱藏狸貓"></label>
 
-
 <!-- 狸貓圖（使用 raw.githubusercontent.com 的可直連路徑） -->
 <img class="tanuki" src="https://raw.githubusercontent.com/s114243-create/s114243-create.github.io/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-04%20155700.png" alt="狸貓圖片" />
-
-
 
   </body>
 </html>

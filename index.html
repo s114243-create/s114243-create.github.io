@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>純 CSS 狸貓動畫（按按鈕模擬）</title>
+<title>純 CSS 狸貓動畫（按按鈕重播）</title>
 <style>
 body {
 margin: 0;
-background: #101018;
+background: #0f0f18;
 overflow: hidden;
 font-family: system-ui, sans-serif;
 color: white;
 }
 
 
-/* 讓按鈕固定在畫面下方 */
+/* --- 固定在下方的按鈕 --- */
 .btn-wrap {
 position: fixed;
 bottom: 20px;
@@ -36,6 +36,10 @@ backdrop-filter: blur(4px);
 }
 
 
+/* 隱藏 checkbox */
+#toggle { display: none; }
+
+
 /* 狸貓圖片 */
 .cat {
 position: absolute;
@@ -50,45 +54,44 @@ animation: none;
 }
 
 
-/* 當 checkbox 被勾選，啟動動畫 */
-#run:checked ~ .cat {
-animation: move 5s linear infinite;
+/* 每次按按鈕 → 啟動動畫（重播） */
+#toggle:checked ~ .cat {
+animation: move 5s linear;
 opacity: 1;
 }
 
 
-/* 從右上變大 → 左下 → 重新開始 */
+/* --- 從右上變大 → 左下 → 消失 --- */
 @keyframes move {
 0% {
 transform: translate(100vw, -20vh) scale(0.2);
+opacity: 1;
 }
 80% {
 transform: translate(-20vw, 60vh) scale(3.5);
+opacity: 1;
 }
 100% {
-transform: translate(100vw, -20vh) scale(0.2);
+transform: translate(-20vw, 60vh) scale(4);
+opacity: 0; /* 滿螢幕後消失 */
 }
 }
-
-
-/* 隱藏 checkbox */
-#run { display: none; }
 </style>
 </head>
 <body>
 
 
-<!-- 利用 checkbox 觸發 CSS 動畫 -->
-<input type="checkbox" id="run">
+<!-- 利用 checkbox 重新啟動動畫 -->
+<input type="checkbox" id="toggle">
 
 
 <!-- 狸貓本體 -->
 <div class="cat"></div>
 
 
-<!-- 按鈕：點一下切換動畫開始/停止（模擬增加狸貓） -->
+<!-- 按鈕（每按一次 = 重播動畫） -->
 <div class="btn-wrap">
-<label for="run"><button>按一下開始 / 再按一下停止</button></label>
+<label for="toggle"><button onclick="this.blur()">按一下出現狸貓</button></label>
 </div>
 
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<style>
+body {
+    margin: 0;
+    background: #f4e6c9;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#toggle {
+    display: none;
+}
+
+.tanuki {
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    width: 80px;
+    height: 80px;
+    background-image: url("tanuki.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#toggle:checked ~ .tanuki {
+    animation: moveScale 3.8s linear forwards;
+    opacity: 1;
+}
+
+@keyframes moveScale {
+    0% {
+        transform: translate(0, 0) scale(0.2);
+    }
+    100% {
+        transform: translate(-120vw, 120vh) scale(6);
+    }
+}
+
+label {
+    width: 100%;
+    padding: 20px;
+    background: #d39c53;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="toggle" />
+<div class="tanuki"></div>
+<label for="toggle">按我讓狸貓跑出來</label>
+
+</body>
+</html>

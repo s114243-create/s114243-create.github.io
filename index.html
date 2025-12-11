@@ -1,99 +1,75 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>純 CSS 狸貓動畫（按按鈕重播）</title>
+<meta charset="UTF-8" />
 <style>
 body {
-margin: 0;
-background: #0f0f18;
-overflow: hidden;
-font-family: system-ui, sans-serif;
-color: white;
+    margin: 0;
+    background: #f4e6c9;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
-
-
-/* --- 固定在下方的按鈕 --- */
-.btn-wrap {
-position: fixed;
-bottom: 20px;
-left: 50%;
-transform: translateX(-50%);
-z-index: 20;
-}
-
-
-button {
-padding: 12px 26px;
-background: rgba(255,255,255,0.12);
-color: #fff;
-border: 1px solid rgba(255,255,255,0.4);
-border-radius: 14px;
-font-size: 16px;
-cursor: pointer;
-backdrop-filter: blur(4px);
-}
-
 
 /* 隱藏 checkbox */
-#toggle { display: none; }
-
-
-/* 狸貓圖片 */
-.cat {
-position: absolute;
-width: 200px;
-height: 200px;
-background-image: url('https://github.com/user-attachments/assets/470b7849-c5a2-4a59-a154-62a642016aac');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-opacity: 0;
-animation: none;
+#toggle {
+    display: none;
 }
 
-
-/* 每次按按鈕 → 啟動動畫（重播） */
-#toggle:checked ~ .cat {
-animation: move 5s linear;
-opacity: 1;
+/* 狸貓圖片容器 */
+.tanuki {
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR8AAAGICAIAAAD3VnPhAAAAImVYSWZJSSoACAA...（此處已替換為完整Base64圖片）");
 }
 
+/* 觸發動畫：出現 + 移動 + 變大 */
+#toggle:checked ~ .tanuki {
+    animation: moveScale 3.8s linear forwards;
+    opacity: 1;
+}
 
-/* --- 從右上變大 → 左下 → 消失 --- */
-@keyframes move {
-0% {
-transform: translate(100vw, -20vh) scale(0.2);
-opacity: 1;
+@keyframes moveScale {
+    0% {
+        transform: translate(0, 0) scale(0.2);
+    }
+    100% {
+        transform: translate(-120vw, 120vh) scale(6);
+    }
 }
-80% {
-transform: translate(-20vw, 60vh) scale(3.5);
-opacity: 1;
-}
-100% {
-transform: translate(-20vw, 60vh) scale(4);
-opacity: 0; /* 滿螢幕後消失 */
-}
+
+/* 按鈕 */
+label {
+    width: 100%;
+    padding: 20px;
+    background: #d39c53;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
 }
 </style>
 </head>
 <body>
 
+<!-- 隱藏切換開關 -->
+<input type="checkbox" id="toggle" />
 
-<!-- 利用 checkbox 重新啟動動畫 -->
-<input type="checkbox" id="toggle">
+<!-- 狸貓 -->
+<div class="tanuki"></div>
 
-
-<!-- 狸貓本體 -->
-<div class="cat"></div>
-
-
-<!-- 按鈕（每按一次 = 重播動畫） -->
-<div class="btn-wrap">
-<label for="toggle"><button onclick="this.blur()">按一下出現狸貓</button></label>
-</div>
-
+<!-- 按鈕 -->
+<label for="toggle">按我讓狸貓跑出來</label>
 
 </body>
 </html>

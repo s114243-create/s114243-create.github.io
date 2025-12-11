@@ -1,51 +1,96 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>狸狸狸狸狸</title>
-    <link rel="icon" href="001.png" >
-  <style>
-/* 基本版面 */
-html,body{height:100%;margin:0;font-family:system-ui, 'Noto Sans TC', sans-serif;background:linear-gradient(180deg,#f8fafc,#eef2ff);}
-
-/* 隱藏的 checkbox（用來記錄點擊狀態） */
-#toggle{position:absolute;left:-9999px;}
-
-/* 全頁的 label，點擊任何位置都會切換 checkbox（因此達到「點一下出現/隱藏狸貓」的效果） */
-label.fullpage{
-position:fixed;inset:0;cursor:pointer;display:block;}
-
-/* 提示字樣 */
-.hint{position:fixed;left:12px;top:12px;background:rgba(255,255,255,0.8);backdrop-filter:blur(6px);padding:8px 12px;border-radius:10px;box-shadow:0 4px 14px rgba(16,24,40,0.06);z-index:40}
-
-/* 狸貓圖片樣式（預設隱藏） */
-.tanuki{
-position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.7);
-max-width:40vmin;max-height:40vmin;pointer-events:none;opacity:0;transition:transform .24s ease,opacity .24s ease;z-index:30;
-filter:drop-shadow(0 8px 18px rgba(16,24,40,0.12));border-radius:10px;}
-
-/* 當 checkbox 被切換為 checked 時，顯示狸貓 */
-#toggle:checked ~ .tanuki{opacity:1;transform:translate(-50%,-55%) scale(1);}
-
-/* 小螢幕調整 */
-@media (max-width:480px){
-.hint{font-size:13px;padding:6px 10px}
-.tanuki{max-width:70vmin;max-height:70vmin}
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>純 CSS 狸貓動畫（按按鈕模擬）</title>
+<style>
+body {
+margin: 0;
+background: #101018;
+overflow: hidden;
+font-family: system-ui, sans-serif;
+color: white;
 }
+
+
+/* 讓按鈕固定在畫面下方 */
+.btn-wrap {
+position: fixed;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 20;
+}
+
+
+button {
+padding: 12px 26px;
+background: rgba(255,255,255,0.12);
+color: #fff;
+border: 1px solid rgba(255,255,255,0.4);
+border-radius: 14px;
+font-size: 16px;
+cursor: pointer;
+backdrop-filter: blur(4px);
+}
+
+
+/* 狸貓圖片 */
+.cat {
+position: absolute;
+width: 200px;
+height: 200px;
+background-image: url('https://github.com/user-attachments/assets/470b7849-c5a2-4a59-a154-62a642016aac');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+opacity: 0;
+animation: none;
+}
+
+
+/* 當 checkbox 被勾選，啟動動畫 */
+#run:checked ~ .cat {
+animation: move 5s linear infinite;
+opacity: 1;
+}
+
+
+/* 從右上變大 → 左下 → 重新開始 */
+@keyframes move {
+0% {
+transform: translate(100vw, -20vh) scale(0.2);
+}
+80% {
+transform: translate(-20vw, 60vh) scale(3.5);
+}
+100% {
+transform: translate(100vw, -20vh) scale(0.2);
+}
+}
+
+
+/* 隱藏 checkbox */
+#run { display: none; }
 </style>
 </head>
 <body>
-<!-- 使用者說明（不佔互動區） -->
-<div class="hint">左鍵點一下任意位置 → 顯示 / 隱藏狸貓</div>
 
-<!-- 隱藏 Checkbox：這是狀態切換的核心（不會顯示在畫面） -->
-<input id="toggle" type="checkbox" />
 
-<!-- 全螢幕 label：點擊任何地方都會切換上面的 checkbox -->
-<label for="toggle" class="fullpage" aria-hidden="true" title="點一下顯示／隱藏狸貓"></label>
+<!-- 利用 checkbox 觸發 CSS 動畫 -->
+<input type="checkbox" id="run">
 
-<!-- 狸貓圖（使用 raw.githubusercontent.com 的可直連路徑） -->
-<img class="tanuki" src="https://raw.githubusercontent.com/s114243-create/s114243-create.github.io/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-04%20155700.png" alt="狸貓圖片" />
 
-  </body>
+<!-- 狸貓本體 -->
+<div class="cat"></div>
+
+
+<!-- 按鈕：點一下切換動畫開始/停止（模擬增加狸貓） -->
+<div class="btn-wrap">
+<label for="run"><button>按一下開始 / 再按一下停止</button></label>
+</div>
+
+
+</body>
 </html>

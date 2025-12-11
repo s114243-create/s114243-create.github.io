@@ -25,7 +25,7 @@
         transform: translateX(-50%);
         padding: 12px 24px;
         background: #ff9f1c;
-        color: white;
+        color: wheat;
         border-radius: 10px;
         cursor: pointer;
         font-size: 20px;
@@ -39,12 +39,14 @@
         right: 0;
         width: 80px;
         opacity: 0;
+        transform-origin: center;
         pointer-events: none; 
     }
 
     /* 觸發動畫（checkbox 被按下時） */
     #trigger:checked ~ .tanuki {
-        animation: moveGrow 4s linear forwards;
+        animation: moveGrow 5s linear forwards;
+                   squish 1s ease-in-out infinite alternate;
         opacity: 1;
     }
 
@@ -69,6 +71,19 @@
             opacity: 0; /* 到最大後消失 */
         }
     }
+    /* Q 彈、Squash & Stretch 效果 */
+    @keyframes squish {
+        0% {
+            transform: scale(1, 1);
+        }
+        40% {
+            transform: scale(1.1, 0.9); /* 寬一點、矮一點 */
+        }
+        70% {
+            transform: scale(0.9, 1.1); /* 窄一點、高一點 */
+        }
+        100% {
+            transform: scale(1, 1);
 </style>
 </head>
 <body>

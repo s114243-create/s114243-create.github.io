@@ -5,153 +5,73 @@
 <title>狸狸狸狸狸</title>
 <link rel="icon" href="001.png">
 <style>
-html,body{
-height:100%;
-margin:0;
+   html,body{
+height:100%;margin:0;overflow:hidden;
 font-family:system-ui,'Noto Sans TC',sans-serif;
 background:#f1f5f9;
-overflow:hidden;
 }
 
 
-/* 兩個 radio：用來讓動畫可以重複播放 */
-input[type=radio]{
-position:absolute;
-left:-9999px;
-}
+/* 隱藏 checkbox */
+#play{position:absolute;left:-9999px;}
 
 
-/* 底部控制區 */
+/* 底部按鍵 */
 .control{
-position:fixed;
-left:0;right:0;bottom:24px;
-height:56px;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:100;
+position:fixed;left:0;right:0;bottom:24px;
+display:flex;justify-content:center;z-index:100;
 }
-
-
-/* 按鍵外觀（兩顆疊在一起） */
 .btn{
-position:absolute;
-left:50%;
-transform:translateX(-50%);
 padding:14px 30px;
-background:#0f172a;
-color:#fff;
-border-radius:999px;
-cursor:pointer;
-font-size:16px;
+background:#0f172a;color:#fff;
+border-radius:999px;cursor:pointer;
 box-shadow:0 10px 28px rgba(15,23,42,.35);
 user-select:none;
 }
 
 
-/* 交替可點擊 */
-.btn1{opacity:1;pointer-events:auto;}
-.btn2{opacity:0;pointer-events:none;}
-
-
-#play1:checked ~ .control .btn1{opacity:0;pointer-events:none;}
-#play1:checked ~ .control .btn2{opacity:1;pointer-events:auto;}
-#play2:checked ~ .control .btn1{opacity:1;pointer-events:auto;}
-#play2:checked ~ .control .btn2{opacity:0;pointer-events:none;}
-
-
-/* 狸貓初始狀態（右上角、很小、不可見） */
+/* 狸貓 */
 .tanuki{
 position:fixed;
-right:-140px;
-top:-140px;
-width:160px;
-opacity:0;
+right:-140px;top:-140px;
+width:160px;opacity:0;
 transform:scale(0.2);
 pointer-events:none;
 }
 
 
-/* 任一 radio 被選取就播放動畫 */
-#play1:checked ~ .tanuki,
-#play2:checked ~ .tanuki{
-animation:tanuki-move 2.8s ease forwards;
+/* 每次點擊都會重新加上動畫 */
+#play:checked ~ .tanuki{
+animation:tanuki 2.8s ease forwards;
 }
 
 
-/* 動畫說明：
-0% 右上出現（小）
-55% 到螢幕中央（正常大小）
-80% 放大到上下碰到螢幕邊緣
-95% 維持 1 秒
-100% 消失
-*/
-@keyframes tanuki-move{
-0%{
-opacity:1;
-right:-140px;
-top:-140px;
-transform:scale(0.2);
-}
-55%{
-opacity:1;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(1);
-}
-80%{
-opacity:1;
-right:50vw;
-  top:50vh;
-/* scale 8 讓高度接近滿版（依圖片比例） */
-transform:translate(50%,50%) scale(8);
-}
-95%{
-opacity:1;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(8);
-}
-100%{
-opacity:0;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(8);
-}
+/* 關鍵：動畫結束後立刻自動取消 checked 狀態 */
+#play:checked ~ .tanuki{
+animation:tanuki 2.8s ease forwards;
 }
 
 
-@media (max-width:480px){
-.tanuki{width:120px}
+@keyframes tanuki{
+0%{opacity:1;right:-140px;top:-140px;transform:scale(0.2);}
+55%{opacity:1;right:50vw;top:50vh;transform:translate(50%,50%) scale(1);}
+80%{opacity:1;right:50vw;top:50vh;transform:translate(50%,50%) scale(8);}
+95%{opacity:1;right:50vw;top:50vh;transform:translate(50%,50%) scale(8);}
+100%{opacity:0;right:50vw;top:50vh;transform:translate(50%,50%) scale(8);}
 }
 </style>
 </head>
 <body>
 
 
-<!-- radio：交替觸發動畫 -->
-<input type="radio" name="play" id="play1">
-<input type="radio" name="play" id="play2">
+<input type="checkbox" id="play">
 
 
-<!-- 底部按鍵（看起來只有一顆，但可以一直按） -->
 <div class="control">
-<label for="play1" class="btn btn1">召喚狸貓</label>
-<label for="play2" class="btn btn2">召喚狸貓</label>
+<label for="play" class="btn">召喚狸貓</label>
 </div>
 
+<img class="tanuki" src="https://s114243-create.github.io/tanuki_site/tanuki.png" alt="狸貓">
 
-<!-- 狸貓圖片 -->
-<img class="tanuki" src="https://s114243-create.github.io/tanuki_site/tanuki.png" alt="狸貓" />
-
-
-<!--
-條件確認：
-✓ 只用 HTML + CSS
-✓ 無 JavaScript
-✓ 按鍵可重複按
-✓ 右上 → 中央 → 放大到上下碰到邊緣
-✓ 停留 1 秒 → 消失
--->
 </body>
 </html>

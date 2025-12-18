@@ -6,10 +6,6 @@
 <link rel="icon" href="001.png">
 <style>
 html,body{
-opacity:0;
-transform:scale(0.2);
-pointer-events:none;
-}
 
 
 /* 任一 radio 被選取就播放動畫 */
@@ -89,8 +85,9 @@ transform:translate(50%,50%) scale(6.8);
 
 <!-- 底部按鍵（每次點擊都能重播） -->
 <div class="control">
-<label for="play1" class="btn">召喚狸貓</label>
-<label for="play2" class="btn" style="position:absolute;opacity:0">切換</label>
+<!-- 同一個按鈕位置，實際上有兩個 label 輪流在上層 -->
+<label for="play1" class="btn btn1">召喚狸貓</label>
+<label for="play2" class="btn btn2">召喚狸貓</label>
 </div>
 
 

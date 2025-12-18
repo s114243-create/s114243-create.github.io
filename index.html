@@ -5,70 +5,89 @@
 <title>狸狸狸狸狸</title>
 <link rel="icon" href="001.png">
 <style>
- html,body{height:100%;margin:0;font-family:system-ui,'Noto Sans TC',sans-serif;background:linear-gradient(180deg,#f8fafc,#eef2ff);overflow:hidden}
+html,body{height:100%;margin:0;font-family:system-ui,'Noto Sans TC',sans-serif;background:#f1f5f9;overflow:hidden}
 
 
-/* 隱藏 checkbox 作為狀態控制 */
-#toggle{position:absolute;left:-9999px}
+/* 兩個 radio 用來交替觸發動畫（可重複播放的關鍵） */
+input[type=radio]{position:absolute;left:-9999px}
 
 
 /* 底部按鍵 */
 .control{
-position:fixed;left:0;right:0;bottom:20px;display:flex;justify-content:center;z-index:50
+position:fixed;left:0;right:0;bottom:24px;display:flex;justify-content:center;z-index:50
 }
 .btn{
-background:#4f46e5;color:#fff;padding:14px 22px;border-radius:999px;
-box-shadow:0 10px 25px rgba(79,70,229,.35);
-cursor:pointer;font-size:16px;user-select:none
+padding:14px 26px;border-radius:999px;background:#0f172a;color:#fff;
+font-size:16px;cursor:pointer;user-select:none;
+box-shadow:0 10px 28px rgba(15,23,42,.35)
 }
 
 
-/* 狸貓初始：在畫面下方、不可見 */
+/* 狸貓初始狀態（不顯示） */
 .tanuki{
 position:fixed;
-left:50%;
-bottom:-200px;
-transform:translateX(-50%) scale(.8);
-max-width:180px;
+right:-120px;
+top:-120px;
+width:160px;
 opacity:0;
+transform:scale(.2);
 pointer-events:none;
-filter:drop-shadow(0 10px 24px rgba(0,0,0,.18));
-transition:
-bottom .6s ease,
-opacity .6s ease,
-transform .6s ease;
 }
 
 
-/* 點擊按鍵後：狸貓跑到螢幕中央並淡出 */
-#toggle:checked ~ .tanuki{
-bottom:50vh;
-transform:translate(-50%,-50%) scale(.4);
+/* 任一 radio 被選取時，播放動畫 */
+#play1:checked ~ .tanuki,
+#play2:checked ~ .tanuki{
+animation:tanuki-run 1.4s ease forwards;
+}
+
+
+/* 動畫：右上 → 中央 → 放大填滿 → 消失 */
+@keyframes tanuki-run{
+0%{
+opacity:1;
+right:-120px;
+top:-120px;
+transform:scale(.2);
+}
+55%{
+opacity:1;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(1);
+}
+85%{
+opacity:1;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(6);
+}
+100%{
 opacity:0;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(6.5);
+}
 }
 
 
-/* 先顯示一瞬間，再淡出（利用 animation-delay 的視覺效果） */
-#toggle:checked ~ .tanuki{
-animation:flash .8s ease forwards;
-}
-
-
-@keyframes flash{
-0%{opacity:0;bottom:-200px}
-20%{opacity:1;bottom:120px}
-100%{opacity:0;bottom:50vh}
+@media (max-width:480px){
+.tanuki{width:120px}
 }
 </style>
 </head>
 <body>
-<!-- 狀態控制（不顯示） -->
-<input type="checkbox" id="toggle" />
 
 
-<!-- 底部控制按鍵 -->
+<!-- 交替用的 radio（確保每按一次都能重新播放） -->
+<input type="radio" name="play" id="play1">
+<input type="radio" name="play" id="play2">
+
+
+<!-- 底部按鍵：每次點擊會在 play1 / play2 間切換 -->
 <div class="control">
-<label for="toggle" class="btn">召喚狸貓</label>
+<label for="play1" class="btn">召喚狸貓</label>
+<label for="play2" class="btn" style="position:absolute;opacity:0">切換</label>
 </div>
 
 
@@ -79,7 +98,8 @@ animation:flash .8s ease forwards;
 <!--
 說明：
 - 完全不使用 JavaScript
-- 點擊下方按鍵 → 狸貓從畫面下方出現 → 跑到螢幕中央 → 立刻消失
-- 若要每次都能重新觸發，可改用 radio + 重置按鍵，我也可以幫你調整
+- 使用兩個 radio 交替觸發 animation，解決 CSS 無法重播的問題
+- 每按一次按鍵，狸貓都會重新從右上角飛到中央並放大消失
+-->
 </body>
 </html>

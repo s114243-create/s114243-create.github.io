@@ -6,10 +6,15 @@
 <link rel="icon" href="001.png">
 <style>
 html,body{
+80% 放大到上下碰到螢幕邊緣
+95% 維持 1 秒
+100% 消失
+*/
+@keyframes tanuki-move{
 0%{
 opacity:1;
-right:-120px;
-top:-120px;
+right:-140px;
+top:-140px;
 transform:scale(0.2);
 }
 55%{
@@ -22,39 +27,20 @@ transform:translate(50%,50%) scale(1);
 opacity:1;
 right:50vw;
 top:50vh;
-transform:translate(50%,50%) scale(6.8);
+/* scale 8 讓高度接近滿版（依圖片比例） */
+transform:translate(50%,50%) scale(8);
 }
-/* 停留 1 秒（保持最大尺寸與可見） */
 95%{
 opacity:1;
 right:50vw;
 top:50vh;
-transform:translate(50%,50%) scale(6.8);
+transform:translate(50%,50%) scale(8);
 }
 100%{
 opacity:0;
 right:50vw;
 top:50vh;
-transform:translate(50%,50%) scale(6.8);
-}
-}
-55%{
-opacity:1;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(1);
-}
-85%{
-opacity:1;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(6);
-}
-100%{
-opacity:0;
-right:50vw;
-top:50vh;
-transform:translate(50%,50%) scale(6.8);
+transform:translate(50%,50%) scale(8);
 }
 }
 
@@ -67,14 +53,13 @@ transform:translate(50%,50%) scale(6.8);
 <body>
 
 
-<!-- 兩個 radio，用來交替觸發動畫 -->
+<!-- radio：交替觸發動畫 -->
 <input type="radio" name="play" id="play1">
 <input type="radio" name="play" id="play2">
 
 
-<!-- 底部按鍵（每次點擊都能重播） -->
+<!-- 底部按鍵（看起來只有一顆，但可以一直按） -->
 <div class="control">
-<!-- 同一個按鈕位置，實際上有兩個 label 輪流在上層 -->
 <label for="play1" class="btn btn1">召喚狸貓</label>
 <label for="play2" class="btn btn2">召喚狸貓</label>
 </div>
@@ -85,10 +70,12 @@ transform:translate(50%,50%) scale(6.8);
 
 
 <!--
-說明：
-- 完全不使用 JavaScript
-- 點擊下方按鍵即可觸發動畫
-- 每按一次都會重新播放
+條件確認：
+✓ 只用 HTML + CSS
+✓ 無 JavaScript
+✓ 按鍵可重複按
+✓ 右上 → 中央 → 放大到上下碰到邊緣
+✓ 停留 1 秒 → 消失
 -->
 </body>
 </html>

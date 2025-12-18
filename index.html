@@ -5,99 +5,81 @@
 <title>狸狸狸狸狸</title>
 <link rel="icon" href="001.png">
 <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        background: #f3f3f3;
-        font-family: sans-serif;
-    }
+ html,body{height:100%;margin:0;font-family:system-ui,'Noto Sans TC',sans-serif;background:linear-gradient(180deg,#f8fafc,#eef2ff);overflow:hidden}
 
-    /* 隱藏 checkbox */
-    #trigger {
-        display: none;
-    }
 
-    /* 按鈕 */
-    label {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 24px;
-        background: #ff9f1c;
-        color: wheat;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 20px;
-        user-select: none;
-    }
+/* 隱藏 checkbox 作為狀態控制 */
+#toggle{position:absolute;left:-9999px}
 
-    /* 狸貓圖片本體 */
-    .tanuki {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 80px;
-        opacity: 0;
-        transform-origin: center;
-        pointer-events: none; 
-    }
 
-    /* 觸發動畫（checkbox 被按下時） */
-    #trigger:checked ~ .tanuki {
-        animation: moveGrow 5s linear forwards;
-                   squish 1s ease-in-out infinite alternate;
-        opacity: 1;
-    }
+/* 底部按鍵 */
+.control{
+position:fixed;left:0;right:0;bottom:20px;display:flex;justify-content:center;z-index:50
+}
+.btn{
+background:#4f46e5;color:#fff;padding:14px 22px;border-radius:999px;
+box-shadow:0 10px 25px rgba(79,70,229,.35);
+cursor:pointer;font-size:16px;user-select:none
+}
 
-    /* 狸貓動畫：從右上 → 左下 & 變大到滿版 */
-    @keyframes moveGrow {
-        0% {
-            top: 0;
-            right: 0;
-            width: 80px;
-            opacity: 1;
-        }
-        70% {
-            top: 60vh;
-            right: 60vw;
-            width: 600px;
-            opacity: 1;
-        }
-        100% {
-            top: 100vh;
-            right: 100vw;
-            width: 2000px; /* 足以填滿整個螢幕 */
-            opacity: 0; /* 到最大後消失 */
-        }
-    }
-    /* Q 彈、Squash & Stretch 效果 */
-    @keyframes squish {
-        0% {
-            transform: scale(1, 1);
-        }
-        40% {
-            transform: scale(1.1, 0.9); /* 寬一點、矮一點 */
-        }
-        70% {
-            transform: scale(0.9, 1.1); /* 窄一點、高一點 */
-        }
-        100% {
-            transform: scale(1, 1);
-        }
-    }
+
+/* 狸貓初始：在畫面下方、不可見 */
+.tanuki{
+position:fixed;
+left:50%;
+bottom:-200px;
+transform:translateX(-50%) scale(.8);
+max-width:180px;
+opacity:0;
+pointer-events:none;
+filter:drop-shadow(0 10px 24px rgba(0,0,0,.18));
+transition:
+bottom .6s ease,
+opacity .6s ease,
+transform .6s ease;
+}
+
+
+/* 點擊按鍵後：狸貓跑到螢幕中央並淡出 */
+#toggle:checked ~ .tanuki{
+bottom:50vh;
+transform:translate(-50%,-50%) scale(.4);
+opacity:0;
+}
+
+
+/* 先顯示一瞬間，再淡出（利用 animation-delay 的視覺效果） */
+#toggle:checked ~ .tanuki{
+animation:flash .8s ease forwards;
+}
+
+
+@keyframes flash{
+0%{opacity:0;bottom:-200px}
+20%{opacity:1;bottom:120px}
+100%{opacity:0;bottom:50vh}
+}
 </style>
 </head>
 <body>
+<!-- 狀態控制（不顯示） -->
+<input type="checkbox" id="toggle" />
 
-<!-- checkbox 用來觸發 CSS 動畫 -->
-<input type="checkbox" id="trigger">
 
-<!-- 按鈕 -->
-<label for="trigger">召喚狸貓！</label>
+<!-- 底部控制按鍵 -->
+<div class="control">
+<label for="toggle" class="btn">召喚狸貓</label>
+</div>
+
 
 <!-- 狸貓圖片 -->
-<img class="tanuki" src="https://mail.google.com/mail/u/0?ui=2&ik=fd9cede9a4&attid=0.1&permmsgid=msg-a:r3385901707011060784&th=19b0c27dcd6c7b71&view=fimg&fur=ip&permmsgid=msg-a:r3385901707011060784&sz=s0-l75-ft&attbid=ANGjdJ9sgmnYbmiVV_6sbQ9Sht1oTOu3fz4xKJuMp-V3hAz3TlqN_r-Ry44PBE5dJKp-GiWk_8t69P-vNGNwgBpn43iumCGPAjixE40zA-33nrJ8ttj7U_X1e0iNe3A&disp=emb&realattid=ii_19b0c27cc06dfd50ef01&zw">
+<img class="tanuki" src="https://raw.githubusercontent.com/s114243-create/s114243-create.github.io/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202025-12-04%20155700.png" alt="狸貓" />
 
+
+<!--
+說明：
+- 完全不使用 JavaScript
+- 點擊下方按鍵 → 狸貓從畫面下方出現 → 跑到螢幕中央 → 立刻消失
+- 若要每次都能重新觸發，可改用 radio + 重置按鍵，我也可以幫你調整
 </body>
 </html>

@@ -5,50 +5,53 @@
 <title>狸狸狸狸狸</title>
 <link rel="icon" href="001.png">
 <style>
-html,body{height:100%;margin:0;font-family:system-ui,'Noto Sans TC',sans-serif;background:#f1f5f9;overflow:hidden}
-
-
-/* 兩個 radio 用來交替觸發動畫（可重複播放的關鍵） */
-input[type=radio]{position:absolute;left:-9999px}
-
-
-/* 底部按鍵 */
-.control{
-position:fixed;left:0;right:0;bottom:24px;display:flex;justify-content:center;z-index:50
-}
-.btn{
-padding:14px 26px;border-radius:999px;background:#0f172a;color:#fff;
-font-size:16px;cursor:pointer;user-select:none;
-box-shadow:0 10px 28px rgba(15,23,42,.35)
-}
-
-
-/* 狸貓初始狀態（不顯示） */
-.tanuki{
-position:fixed;
-right:-120px;
-top:-120px;
-width:160px;
+html,body{
 opacity:0;
-transform:scale(.2);
+transform:scale(0.2);
 pointer-events:none;
 }
 
 
-/* 任一 radio 被選取時，播放動畫 */
+/* 任一 radio 被選取就播放動畫 */
 #play1:checked ~ .tanuki,
 #play2:checked ~ .tanuki{
-animation:tanuki-run 1.4s ease forwards;
+animation:tanuki-move 2.4s ease forwards;
 }
 
 
 /* 動畫：右上 → 中央 → 放大填滿 → 消失 */
-@keyframes tanuki-run{
+@keyframes tanuki-move{
 0%{
 opacity:1;
 right:-120px;
 top:-120px;
-transform:scale(.2);
+transform:scale(0.2);
+}
+55%{
+opacity:1;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(1);
+}
+80%{
+opacity:1;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(6.8);
+}
+/* 停留 1 秒（保持最大尺寸與可見） */
+95%{
+opacity:1;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(6.8);
+}
+100%{
+opacity:0;
+right:50vw;
+top:50vh;
+transform:translate(50%,50%) scale(6.8);
+}
 }
 55%{
 opacity:1;
@@ -66,7 +69,7 @@ transform:translate(50%,50%) scale(6);
 opacity:0;
 right:50vw;
 top:50vh;
-transform:translate(50%,50%) scale(6.5);
+transform:translate(50%,50%) scale(6.8);
 }
 }
 
@@ -79,12 +82,12 @@ transform:translate(50%,50%) scale(6.5);
 <body>
 
 
-<!-- 交替用的 radio（確保每按一次都能重新播放） -->
+<!-- 兩個 radio，用來交替觸發動畫 -->
 <input type="radio" name="play" id="play1">
 <input type="radio" name="play" id="play2">
 
 
-<!-- 底部按鍵：每次點擊會在 play1 / play2 間切換 -->
+<!-- 底部按鍵（每次點擊都能重播） -->
 <div class="control">
 <label for="play1" class="btn">召喚狸貓</label>
 <label for="play2" class="btn" style="position:absolute;opacity:0">切換</label>
@@ -92,14 +95,14 @@ transform:translate(50%,50%) scale(6.5);
 
 
 <!-- 狸貓圖片 -->
-<img class="tanuki" src="https://raw.githubusercontent.com/s114243-create/s114243-create.github.io/refs/heads/main/tanuki_site/tanuki.png" alt="狸貓" />
+<img class="tanuki" src="https://s114243-create.github.io/tanuki_site/tanuki.png" alt="狸貓" />
 
 
 <!--
 說明：
 - 完全不使用 JavaScript
-- 使用兩個 radio 交替觸發 animation，解決 CSS 無法重播的問題
-- 每按一次按鍵，狸貓都會重新從右上角飛到中央並放大消失
+- 點擊下方按鍵即可觸發動畫
+- 每按一次都會重新播放
 -->
 </body>
 </html>
